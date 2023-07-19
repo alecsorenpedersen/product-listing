@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilters, selectFilters } from '../reducers/productsSlice';
 
@@ -15,8 +14,8 @@ const AppliedFilters = () => {
 			<h2>Applied Filters:</h2>
 			{filters.map((filter) => (
 				<div key={filter}>
-					<span>{filter}</span>
-					<button onClick={() => removeFilter(filter)}>Remove</button>
+					<span>£{filter}</span>
+					<button onClick={() => removeFilter(filter)}>❎</button>
 				</div>
 			))}
 		</div>
