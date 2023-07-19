@@ -5,16 +5,20 @@ import {
 	selectProductsStatus,
 	setSort,
 	selectSort,
+	selectFilters,
 } from '../reducers/productsSlice';
 import { AppDispatch } from '../store';
 import Product from './Product';
 import { fetchProducts } from '../services/api';
+import Filters from './Filters';
+import AppliedFilters from './AppliedFilters';
 
 const ProductList = () => {
 	const dispatch: AppDispatch = useDispatch();
 	const products = useSelector(selectProducts);
 	const status = useSelector(selectProductsStatus);
 	const sort = useSelector(selectSort);
+	const filters = useSelector(selectFilters);
 
 	useEffect(() => {
 		if (status === 'idle') {
@@ -41,6 +45,8 @@ const ProductList = () => {
 	return (
 		<div>
 			<h1>Products</h1>
+			{filters.length > 0 && <AppliedFilters />}
+			<Filters />
 			<select value={sort} onChange={(e) => dispatch(setSort(e.target.value))}>
 				<option value='default'>Default</option>
 				<option value='lowToHigh'>Price: Low to High</option>

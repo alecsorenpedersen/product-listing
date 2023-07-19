@@ -17,10 +17,13 @@ export type Product = {
 	sort: string;
 };
 
+export type Filters = string[];
+
 export interface ProductsState {
 	products: Product[];
 	status: 'idle' | 'loading' | 'failed';
 	sort: string;
+	filters: Filters;
 }
 
 export interface ProductProps {

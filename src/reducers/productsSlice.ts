@@ -2,11 +2,13 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { fetchProducts } from '../services/api';
 import { Product, ProductsState } from '../types';
+import { Filters } from '../types/types';
 
 const initialState: ProductsState = {
 	products: [],
 	status: 'idle',
 	sort: 'default',
+	filters: [],
 };
 
 export const productsSlice = createSlice({
@@ -15,6 +17,9 @@ export const productsSlice = createSlice({
 	reducers: {
 		setSort: (state, action: PayloadAction<string>) => {
 			state.sort = action.payload;
+		},
+		setFilters: (state, action: PayloadAction<Filters>) => {
+			state.filters = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -33,23 +38,37 @@ export const productsSlice = createSlice({
 	},
 });
 
-export const { setSort } = productsSlice.actions;
-
+export const { setSort, setFilters } = productsSlice.actions;
 export default productsSlice.reducer;
 
 export const selectProducts = (state: RootState) => {
+	let filteredProducts = [...state.products.products];
+
+	if (state.products.filters.length > 0) {
+		filteredProducts = filteredProducts.filter((product) =>
+			state.products.filters.some((filter) => {
+				const [lower, upper] = filter.split('-').map(Number);
+				return (
+					product.price.priceIncTax >= lower &&
+					product.price.priceIncTax <= upper
+				);
+			}),
+		);
+	}
+
 	switch (state.products.sort) {
 		case 'lowToHigh':
-			return [...state.products.products].sort(
+			return [...filteredProducts].sort(
 				(a: Product, b: Product) => a.price.priceIncTax - b.price.priceIncTax,
 			);
 		case 'highToLow':
-			return [...state.products.products].sort(
+			return [...filteredProducts].sort(
 				(a: Product, b: Product) => b.price.priceIncTax - a.price.priceIncTax,
 			);
 		default:
-			return state.products.products;
+			return filteredProducts;
 	}
 };
 export const selectProductsStatus = (state: RootState) => state.products.status;
 export const selectSort = (state: RootState) => state.products.sort;
+export const selectFilters = (state: RootState) => state.products.filters;
