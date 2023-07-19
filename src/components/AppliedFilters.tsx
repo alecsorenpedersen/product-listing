@@ -15,7 +15,7 @@ const AppliedFilters = () => {
 			{filters.map((filter) => (
 				<div key={filter}>
 					<span>£{filter}</span>
-					<button onClick={() => removeFilter(filter)}>❎</button>
+					<button onClick={() => removeFilter(filter)}> ❎ </button>
 				</div>
 			))}
 		</div>
