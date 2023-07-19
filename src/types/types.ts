@@ -14,11 +14,13 @@ export type Product = {
 	brand: {
 		name: string;
 	};
+	sort: string;
 };
 
 export interface ProductsState {
 	products: Product[];
 	status: 'idle' | 'loading' | 'failed';
+	sort: string;
 }
 
 export interface ProductProps {
