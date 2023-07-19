@@ -5,7 +5,7 @@ const useSort = () => {
 	const dispatch = useDispatch();
 	const sort = useSelector(selectSort);
 
-	const onSortChange = (value: any) => dispatch(setSort(value));
+	const onSortChange = (value: string) => dispatch(setSort(value));
 
 	return { sort, onSortChange };
 };

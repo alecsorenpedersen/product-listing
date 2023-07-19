@@ -1,24 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilters, selectFilters } from '../reducers/productsSlice';
+import { toggleFilter, selectFilters } from '../reducers/productsSlice';
 import {
 	FiltersWrapper,
 	FilterOption,
 	FilterCheckbox,
 	FilterLabel,
 } from './styles';
-import { availableFilters } from './constants';
+import { availableFilters } from '../constants';
 
 const Filters = () => {
 	const dispatch = useDispatch();
 	const activeFilters = useSelector(selectFilters);
-
-	const handleCheckboxChange = (filter: string) => {
-		if (activeFilters.includes(filter)) {
-			dispatch(setFilters(activeFilters.filter((f) => f !== filter)));
-		} else {
-			dispatch(setFilters([...activeFilters, filter]));
-		}
-	};
 
 	return (
 		<FiltersWrapper>
@@ -29,7 +21,7 @@ const Filters = () => {
 						type='checkbox'
 						id={filter}
 						checked={activeFilters.includes(filter)}
-						onChange={() => handleCheckboxChange(filter)}
+						onChange={() => dispatch(toggleFilter(filter))}
 					/>
 					<FilterLabel htmlFor={filter}>£{filter}</FilterLabel>
 				</FilterOption>

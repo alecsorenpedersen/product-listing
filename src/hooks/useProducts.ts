@@ -6,6 +6,7 @@ import {
 } from '../reducers/productsSlice';
 import { AppDispatch } from '../store';
 import { fetchProducts } from '../services/api';
+import { IDLE } from '../constants';
 
 const useProducts = () => {
 	const dispatch: AppDispatch = useDispatch();
@@ -13,7 +14,7 @@ const useProducts = () => {
 	const status = useSelector(selectProductsStatus);
 
 	useEffect(() => {
-		if (status === 'idle') {
+		if (status === IDLE) {
 			dispatch(fetchProducts());
 		}
 		// eslint-disable-next-line

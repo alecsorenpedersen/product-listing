@@ -1,12 +1,17 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { fetchProducts } from '../services/api';
-import { Product, ProductsState } from '../types';
+import { ProductsState } from '../types';
 import { Filters } from '../types/types';
+import {
+	filterProductsByPrice,
+	sortProductsByPrice,
+} from '../utils/helperFunctions';
+import { FAILED, IDLE, LOADING } from '../constants';
 
 const initialState: ProductsState = {
 	products: [],
-	status: 'idle',
+	status: IDLE,
 	sort: 'default',
 	filters: [],
 };
@@ -18,57 +23,47 @@ export const productsSlice = createSlice({
 		setSort: (state, action: PayloadAction<string>) => {
 			state.sort = action.payload;
 		},
+
 		setFilters: (state, action: PayloadAction<Filters>) => {
 			state.filters = action.payload;
+		},
+
+		toggleFilter: (state, action: PayloadAction<string>) => {
+			const filterIndex = state.filters.indexOf(action.payload);
+			if (filterIndex >= 0) {
+				state.filters.splice(filterIndex, 1);
+			} else {
+				state.filters.push(action.payload);
+			}
 		},
 	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchProducts.pending, (state) => {
-				state.status = 'loading';
+				state.status = LOADING;
 			})
 			.addCase(fetchProducts.fulfilled, (state, action) => {
-				state.status = 'idle';
+				state.status = IDLE;
 				state.products = action.payload.products;
 			})
-			.addCase(fetchProducts.rejected, (state) => {
-				state.status = 'failed';
+			.addCase(fetchProducts.rejected, (state, action) => {
+				state.status = FAILED;
 				state.products = [];
 			});
 	},
 });
 
-export const { setSort, setFilters } = productsSlice.actions;
+export const { setSort, setFilters, toggleFilter } = productsSlice.actions;
 export default productsSlice.reducer;
 
 export const selectProducts = (state: RootState) => {
-	let filteredProducts = [...state.products.products];
-
-	if (state.products.filters.length > 0) {
-		filteredProducts = filteredProducts.filter((product) =>
-			state.products.filters.some((filter) => {
-				const [lower, upper] = filter.split('-').map(Number);
-				return (
-					product.price.priceIncTax >= lower &&
-					product.price.priceIncTax <= upper
-				);
-			}),
-		);
-	}
-
-	switch (state.products.sort) {
-		case 'lowToHigh':
-			return [...filteredProducts].sort(
-				(a: Product, b: Product) => a.price.priceIncTax - b.price.priceIncTax,
-			);
-		case 'highToLow':
-			return [...filteredProducts].sort(
-				(a: Product, b: Product) => b.price.priceIncTax - a.price.priceIncTax,
-			);
-		default:
-			return filteredProducts;
-	}
+	let filteredProducts = filterProductsByPrice(
+		state.products.products,
+		state.products.filters,
+	);
+	return sortProductsByPrice(filteredProducts, state.products.sort);
 };
+
 export const selectProductsStatus = (state: RootState) => state.products.status;
 export const selectSort = (state: RootState) => state.products.sort;
 export const selectFilters = (state: RootState) => state.products.filters;

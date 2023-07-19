@@ -11,25 +11,18 @@ import {
 	ProductListWrapper,
 	FilterSection,
 } from './styles';
+import { FAILED, IDLE, LOADING } from '../constants';
 
 const ProductList = () => {
 	const filters = useSelector(selectFilters);
 	const { products, status } = useProducts();
 
-	let content;
+	if (status === LOADING) {
+		return <div>Loading...</div>;
+	}
 
-	if (status === 'loading') {
-		content = <div>Loading...</div>;
-	} else if (status === 'failed') {
-		content = <div>Error loading products</div>;
-	} else if (status === 'idle') {
-		content = (
-			<Content>
-				{products.map((product) => (
-					<Product key={product.id} product={product} />
-				))}
-			</Content>
-		);
+	if (status === FAILED) {
+		return <div>Error loading products</div>;
 	}
 
 	return (
@@ -42,7 +35,13 @@ const ProductList = () => {
 						{filters.length > 0 && <AppliedFilters />}
 						<Filters />
 					</FilterSection>
-					{content}
+					{status === IDLE && (
+						<Content>
+							{products.map((product) => (
+								<Product key={product.id} product={product} />
+							))}
+						</Content>
+					)}
 				</ProductListWrapper>
 			</Container>
 		</>
