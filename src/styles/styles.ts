@@ -1,5 +1,13 @@
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const boxShadow = css`
+	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+`;
+
+const borderRadius = css`
+	border-radius: 10px;
+`;
 
 export const FiltersWrapper = styled.div`
 	padding: 20px;
@@ -23,13 +31,13 @@ export const FilterLabel = styled.label`
 	color: #333;
 `;
 export const ProductCard = styled(motion.div)`
+	${boxShadow}
+	${borderRadius}
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
 	border: 1px solid #ddd;
-	border-radius: 10px;
 	background-color: #fff;
-	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 	transition: all 0.3s ease-out;
 `;
 
@@ -76,7 +84,7 @@ export const ProductListWrapper = styled.div`
 	padding: 20px;
 `;
 
-export const FilterSection = styled.div`
+export const FiltersSection = styled(motion.div)`
 	padding: 20px;
 	background-color: #fff;
 	border-radius: 5px;
@@ -86,7 +94,6 @@ export const FilterSection = styled.div`
 	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 	transition: all 0.3s ease-out;
 `;
-
 export const Content = styled.div`
 	display: grid;
 	grid-gap: 20px;
@@ -106,4 +113,38 @@ export const SortSelect = styled.select`
 	border-radius: 5px;
 	border: 1px solid #ddd;
 	margin-bottom: 20px;
+`;
+
+export const AppliedFiltersContainer = styled.div`
+	padding: 10px;
+	background-color: #f5f5f5;
+	border-radius: 5px;
+	margin-bottom: 10px;
+`;
+
+export const AppliedFiltersTitle = styled.p`
+	margin: 0;
+	margin-bottom: 5px;
+	font-weight: 600;
+`;
+
+export const AppliedFilter = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px 10px;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	background-color: #fff;
+`;
+
+export const AppliedFilterText = styled.span`
+	margin-right: 10px;
+`;
+
+export const RemoveFilterButton = styled(motion.button)`
+	border: none;
+	background: none;
+	color: #f00;
+	cursor: pointer;
 `;

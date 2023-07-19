@@ -1,5 +1,5 @@
 import useSort from '../hooks/useSort';
-import { SortSelect } from './styles';
+import { SortSelect } from '../styles/styles';
 
 const SortDropdown = () => {
 	const { sort, onSortChange } = useSort();

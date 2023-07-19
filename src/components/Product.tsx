@@ -5,11 +5,15 @@ import {
 	ProductImage,
 	ProductName,
 	ProductPrice,
-} from './styles';
+} from '../styles/styles';
 
 const Product = ({ product }: ProductProps) => {
 	return (
-		<ProductCard animate={{ opacity: 1, y: 0 }} whileHover={{ scale: 1.05 }}>
+		<ProductCard
+			whileHover={{ scale: 1.05 }}
+			initial={{ rotateY: 90, opacity: 0 }}
+			animate={{ rotateY: 0, opacity: 1 }}
+			transition={{ delay: 0.11, duration: 0.2 }}>
 			<ImageWrapper>
 				<ProductImage
 					src={product.image.url}

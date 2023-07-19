@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice, createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { fetchProducts } from '../services/api';
 import { ProductsState } from '../types';
@@ -56,13 +56,19 @@ export const productsSlice = createSlice({
 export const { setSort, setFilters, toggleFilter } = productsSlice.actions;
 export default productsSlice.reducer;
 
-export const selectProducts = (state: RootState) => {
-	let filteredProducts = filterProductsByPrice(
-		state.products.products,
-		state.products.filters,
-	);
-	return sortProductsByPrice(filteredProducts, state.products.sort);
-};
+// Selectors to extract pieces of state
+const selectProductsState = (state: RootState) => state.products.products;
+const selectFiltersState = (state: RootState) => state.products.filters;
+const selectSortState = (state: RootState) => state.products.sort;
+
+// Memoized selector to compute derived data
+export const selectProducts = createSelector(
+	[selectProductsState, selectFiltersState, selectSortState],
+	(products, filters, sort) => {
+		let filteredProducts = filterProductsByPrice(products, filters);
+		return sortProductsByPrice(filteredProducts, sort);
+	},
+);
 
 export const selectProductsStatus = (state: RootState) => state.products.status;
 export const selectSort = (state: RootState) => state.products.sort;

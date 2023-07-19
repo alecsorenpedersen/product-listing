@@ -1,32 +1,46 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleFilter, selectFilters } from '../reducers/productsSlice';
+import { selectFilters, toggleFilter } from '../reducers/productsSlice';
+import AppliedFilters from './AppliedFilters';
+import SortDropdown from './SortDropdown';
 import {
-	FiltersWrapper,
 	FilterOption,
 	FilterCheckbox,
 	FilterLabel,
-} from './styles';
+	FiltersSection,
+} from '../styles/styles';
 import { availableFilters } from '../constants';
 
-const Filters = () => {
+type FilterSectionProps = {
+	productCount: number;
+};
+
+const Filters = ({ productCount }: FilterSectionProps) => {
 	const dispatch = useDispatch();
-	const activeFilters = useSelector(selectFilters);
+	const filters = useSelector(selectFilters);
 
 	return (
-		<FiltersWrapper>
-			<h2>Price:</h2>
+		<FiltersSection
+			initial={{ x: '-100vw', opacity: 0 }}
+			animate={{ x: 0, opacity: 1 }}
+			transition={{ type: 'spring', stiffness: 120 }}>
+			<p>Sort By:</p>
+			<SortDropdown />
+			<div>{productCount} results</div>
+			<h2>Filter By:</h2>
+			{filters.length > 0 && <AppliedFilters />}
+			<h4>Price:</h4>
 			{availableFilters.map((filter) => (
 				<FilterOption key={filter}>
 					<FilterCheckbox
 						type='checkbox'
 						id={filter}
-						checked={activeFilters.includes(filter)}
+						checked={filters.includes(filter)}
 						onChange={() => dispatch(toggleFilter(filter))}
 					/>
 					<FilterLabel htmlFor={filter}>£{filter}</FilterLabel>
 				</FilterOption>
 			))}
-		</FiltersWrapper>
+		</FiltersSection>
 	);
 };
 

@@ -1,5 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilters, selectFilters } from '../reducers/productsSlice';
+import {
+	AppliedFiltersContainer,
+	AppliedFiltersTitle,
+	AppliedFilter,
+	AppliedFilterText,
+	RemoveFilterButton,
+} from '../styles/styles';
 
 const AppliedFilters = () => {
 	const dispatch = useDispatch();
@@ -10,15 +17,22 @@ const AppliedFilters = () => {
 	};
 
 	return (
-		<div>
-			<h2>Applied Filters:</h2>
+		<AppliedFiltersContainer>
+			<AppliedFiltersTitle>Applied Filters:</AppliedFiltersTitle>
 			{filters.map((filter) => (
-				<div key={filter}>
-					<span>£{filter}</span>
-					<button onClick={() => removeFilter(filter)}> ❎ </button>
-				</div>
+				<AppliedFilter key={filter}>
+					<AppliedFilterText>£{filter}</AppliedFilterText>
+					<RemoveFilterButton
+						onClick={() => removeFilter(filter)}
+						whileHover={{ rotate: 100 }}
+						whileFocus={{ rotate: 100 }}
+						transition={{ type: 'spring', stiffness: 300 }}>
+						{' '}
+						❌{' '}
+					</RemoveFilterButton>
+				</AppliedFilter>
 			))}
-		</div>
+		</AppliedFiltersContainer>
 	);
 };
 
