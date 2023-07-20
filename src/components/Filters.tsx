@@ -28,7 +28,7 @@ const Filters = ({ productCount }: FilterSectionProps) => {
 			<div>{productCount} results</div>
 			<h2>Filter By:</h2>
 			{filters.length > 0 && <AppliedFilters />}
-			<h4>Price:</h4>
+			<h3>Price:</h3>
 			{availableFilters.map((filter) => (
 				<FilterOption key={filter}>
 					<FilterCheckbox

@@ -74,6 +74,7 @@ export const Container = styled.div`
 	max-width: 1200px;
 	padding: 10px;
 	box-sizing: border-box;
+	overflow: hidden;
 `;
 
 export const ProductListWrapper = styled.div`
