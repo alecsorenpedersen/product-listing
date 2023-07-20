@@ -16,6 +16,7 @@ const Product = ({ product }: ProductProps) => {
 			transition={{ delay: 0.11, duration: 0.2 }}>
 			<ImageWrapper>
 				<ProductImage
+					title='Product Image'
 					src={product.image.url}
 					alt={product.image.externalId}
 					loading='lazy'

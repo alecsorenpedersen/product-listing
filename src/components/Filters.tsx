@@ -23,7 +23,6 @@ const Filters = ({ productCount }: FilterSectionProps) => {
 			initial={{ x: '-100vw', opacity: 0 }}
 			animate={{ x: 0, opacity: 1 }}
 			transition={{ type: 'spring', stiffness: 120 }}>
-			<p>Sort By:</p>
 			<SortDropdown />
 			<div>{productCount} results</div>
 			<h2>Filter By:</h2>
