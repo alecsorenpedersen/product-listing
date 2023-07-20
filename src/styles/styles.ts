@@ -38,7 +38,6 @@ export const ProductCard = styled(motion.div)`
 	padding: 20px;
 	border: 1px solid #ddd;
 	background-color: #fff;
-	transition: all 0.3s ease-out;
 `;
 
 export const ProductImage = styled.img`
@@ -93,7 +92,6 @@ export const FiltersSection = styled(motion.div)`
 	border: 1px solid #ddd;
 	border-radius: 10px;
 	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-	transition: all 0.3s ease-out;
 `;
 export const Content = styled.div`
 	display: grid;

@@ -1,6 +1,6 @@
 # 🛍️ E-Commerce Listing Tech Test 🛍️
 
-[Finished Tech Test](https://main.d3ng6grij07owz.amplifyapp.com)
+[Finished Tech Test Ampliify Link](https://main.d3ng6grij07owz.amplifyapp.com)
 
 ## Stack
 
@@ -18,11 +18,13 @@
 4. Filter by Checkbox
 5. Correct HTML Semantics & SEO
 
-## Run Script
+## Install Dependancies
 
 Make sure to run `yarn` or `npm install` to install dependencies.
 
-Then, in the project's root folder, execute `yarn start` or `npm start`
+## Run Script
+
+Then execute `yarn start` or `npm start` in your root folder
 
 ## API
 
